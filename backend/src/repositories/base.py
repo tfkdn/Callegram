@@ -108,13 +108,11 @@ class SQLAlchemyRepository(AbstractRepository):
         if 'options' in kwargs:
             for option in kwargs['options']:
                 stmt = stmt.options(option)
-        res = await self.session.execute(stmt)
-        return res
+        return await self.session.execute(stmt)
 
     async def delete_one(self, id: str | int):
         stmt = delete(self.model).where(self.model.id == id)
-        res = await self.session.execute(stmt)
-        return res
+        return await self.session.execute(stmt)
 
     async def find_one_by(self, column: Column, value, **kwargs) -> model:
         stmt = select(self.model).where(column == value)
