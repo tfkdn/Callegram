@@ -147,22 +147,19 @@ class ScheduleService:
 
             events = await uow.calendar_events.find_all_at_date_any_user(user_id, date)
 
-            availability = {}
             weekday = date.weekday()
             start_hour = schedule.windows[weekday][0] // 60
             end_hour = schedule.windows[weekday][1] // 60
 
-            for hour in range(start_hour, end_hour):
-                availability[hour] = [0, 30]
-
+            availability = {hour: [0, 30] for hour in range(start_hour, end_hour)}
             for event in events:
                 event_start_hour = event.appointment_time.hour
-                event_start_minute = event.appointment_time.minute
-
                 if event_start_hour not in availability:
                     continue
 
                 if len(availability[event_start_hour]) == 2:
+                    event_start_minute = event.appointment_time.minute
+
                     availability[event_start_hour].remove(event_start_minute)
                 else:
                     availability.pop(event_start_hour)

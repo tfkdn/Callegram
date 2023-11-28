@@ -94,7 +94,7 @@ class AuthService:
         # as per https://core.telegram.org/bots/webapps#validating-data-received-via-the-mini-app
         init_data_pairs = urllib.parse.unquote(init_data_raw).split("&")
         # remove hash from the list because we can't validate hash of the hash
-        init_data_pairs.remove("hash=" + init_data.hash)
+        init_data_pairs.remove(f"hash={init_data.hash}")
         data_check_string = "\n".join(sorted(init_data_pairs))  # sort to ensure the same order of keys
 
         secret_key = hmac.new(b"WebAppData", self.bot_token.encode(), hashlib.sha256).digest()

@@ -71,10 +71,10 @@ def is_event_inside_schedule(
     start_time = new_event.appointment_time.hour * 60 + new_event.appointment_time.minute
     end_time = start_time + new_event.duration.seconds // 60
 
-    if start_time < schedule.windows[weekday][0] or end_time > schedule.windows[weekday][1]:
-        return False
-
-    return True
+    return (
+        start_time >= schedule.windows[weekday][0]
+        and end_time <= schedule.windows[weekday][1]
+    )
 
 
 @router.get("/get/{event_id}")

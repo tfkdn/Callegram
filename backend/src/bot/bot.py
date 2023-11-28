@@ -14,5 +14,4 @@ def get_bot_instance() -> Bot:
         )
     )
 
-    bot = Bot(token=BOT_TOKEN, session=session)
-    return bot
+    return Bot(token=BOT_TOKEN, session=session)
